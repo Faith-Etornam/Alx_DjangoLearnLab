@@ -11,7 +11,7 @@ print()
 
 # 2. List all books in a library (ManyToMany)
 print("All books in Central Public Library:")
-library = Library.objects.get(name="Central Public Library")
+library = Library.objects.get(name=library_name)
 for book in library.books.all():
     print(f"- {book.title}")
 
