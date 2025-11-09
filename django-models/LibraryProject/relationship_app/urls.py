@@ -16,6 +16,6 @@ urlpatterns = [
     path('books/', views.book_list, name='book_list'),
     path('add_book/', views.add_book, name='add_book'),
     path('books/<int:book_id>/', views.book_detail, name='book_detail'),
-    path('books/<int:book_id>/edit/', views.edit_book, name='edit_book'),  # Add this line
+    path('edit_book/', views.edit_book, name='edit_book'),  # Add this line
     path('books/<int:book_id>/delete/', views.delete_book, name='delete_book')
 ]
