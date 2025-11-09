@@ -17,6 +17,16 @@ class Book(models.Model):
 class Library(models.Model):
     name = models.CharField(max_length=255)
     books = models.ManyToManyField(Book)
+    class Meta:
+        # Custom permissions for the Book model
+        permissions = [
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book"),
+            ("can_view_book", "Can view book"),
+        ]
+        # Optional: Define default ordering
+        ordering = ['title']
 
 class Librarian(models.Model):
     name = models.CharField(max_length=255)
