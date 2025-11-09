@@ -13,16 +13,14 @@ from .forms import BookForm
 from .forms import BookForm 
 from django.contrib.auth.decorators import permission_required
 
- # We'll create this form
-
-# Book List View (requires view permission)
+ 
 @login_required
 @permission_required('relationship_app.can_view_book', raise_exception=True)
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/book_list.html', {'books': books})
 
-# Add Book View (requires add permission)
+
 @login_required
 @permission_required('relationship_app.can_add_book', raise_exception=True)
 def add_book(request):
@@ -42,7 +40,7 @@ def add_book(request):
         'title': 'Add New Book'
     })
 
-# Edit Book View (requires change permission)
+
 @login_required
 @permission_required('relationship_app.can_change_book', raise_exception=True)
 def edit_book(request, book_id):
@@ -63,7 +61,7 @@ def edit_book(request, book_id):
         'book': book
     })
 
-# Delete Book View (requires delete permission)
+
 @login_required
 @permission_required('relationship_app.can_delete_book', raise_exception=True)
 def delete_book(request, book_id):
@@ -76,14 +74,12 @@ def delete_book(request, book_id):
     
     return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
 
-# Book Detail View (requires view permission)
 @login_required
 @permission_required('relationship_app.can_view_book', raise_exception=True)
 def book_detail(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     return render(request, 'relationship_app/book_detail.html', {'book': book})
 
-# Existing views
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
@@ -93,7 +89,6 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# Authentication views
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -135,7 +130,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseForbidden
 
-# Utility functions for role checking
 def is_admin(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
@@ -145,7 +139,7 @@ def is_librarian(user):
 def is_member(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
-# Role-based views
+
 @login_required
 @user_passes_test(is_admin)
 def admin_view(request):
