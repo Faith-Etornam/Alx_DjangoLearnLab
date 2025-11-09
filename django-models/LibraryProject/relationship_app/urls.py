@@ -12,9 +12,10 @@ urlpatterns = [
     path('admin/', views.admin_view, name='admin_view'),
     path('librarian/', views.librarian_view, name='librarian_view'),
     path('member/', views.member_view, name='member_view'),
+    # Book management URLs with permissions
     path('books/', views.book_list, name='book_list'),
-    path('add_book/', views.add_book, name='add_book'),
+    path('books/add/', views.add_book, name='add_book'),
     path('books/<int:book_id>/', views.book_detail, name='book_detail'),
-    path('edit_books/', views.edit_book, name='edit_book'),
-    path('books/<int:book_id>/delete/', views.delete_book, name='delete_book'),
+    path('books/<int:book_id>/edit/', views.edit_book, name='edit_book'),  # Add this line
+    path('books/<int:book_id>/delete/', views.delete_book, name='delete_book')
 ]
