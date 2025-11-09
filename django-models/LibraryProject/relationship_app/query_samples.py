@@ -2,7 +2,7 @@ from relationship_app.models import Author, Book, Library, Librarian
 
 # 1. Query all books by a specific author (ForeignKey)
 print("All books by J.K. Rowling:")
-author = Author.objects.get(name="J.K. Rowling")
+author = Author.objects.get(name=author_name)
 books = Book.objects.filter(author=author)
 for book in books:
     print(f"- {book.title}")
