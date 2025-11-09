@@ -10,7 +10,10 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden
 from .models import Book
 from .forms import BookForm
-from .forms import BookForm  # We'll create this form
+from .forms import BookForm 
+from django.contrib.auth.decorators import permission_required
+
+ # We'll create this form
 
 # Book List View (requires view permission)
 @login_required
