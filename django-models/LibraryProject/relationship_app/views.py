@@ -13,6 +13,7 @@ from .models import Book
 from .forms import BookForm
 from .forms import BookForm 
 from django.contrib.auth.decorators import permission_required
+from django.views.generic.detail import DetailView
 
  
 @login_required
