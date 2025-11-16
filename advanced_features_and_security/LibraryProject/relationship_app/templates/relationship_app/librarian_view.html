@@ -1,44 +1,12 @@
+<!-- librarian_view.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Librarian Panel - Relationship App</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .librarian-panel { 
-            background-color: #d1ecf1; 
-            padding: 20px; 
-            border-radius: 10px;
-            border: 2px solid #0c5460;
-        }
-        h1 { color: #0c5460; }
-        .nav-links { margin-top: 20px; }
-        .nav-links a { 
-            margin-right: 15px; 
-            text-decoration: none;
-            color: #0c5460;
-            font-weight: bold;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Librarian</title>
 </head>
 <body>
-    <div class="librarian-panel">
-        <h1>📚 Librarian Panel</h1>
-        <p>Welcome, <strong>{{ user.username }}</strong>! You have librarian privileges.</p>
-        
-        <h2>Librarian Functions:</h2>
-        <ul>
-            <li>Manage Book Inventory and Relationships</li>
-            <li>Process User Book Relationships</li>
-            <li>Manage Member Accounts</li>
-            <li>Generate Relationship Reports</li>
-            <li>Monitor User Activity</li>
-        </ul>
-        
-        <div class="nav-links">
-            <a href="{% url 'relationship_app:home' %}">🏠 Home</a>
-            <a href="{% url 'relationship_app:member_view' %}">👥 View Member Area</a>
-            <a href="{% url 'logout' %}">🚪 Logout</a>
-        </div>
-    </div>
+    <h1>You're welcome, librarian!</h1>
+    <p>You have a full access to manage and organize books in the library.</p>
 </body>
 </html>

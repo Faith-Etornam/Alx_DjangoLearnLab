@@ -1,15 +1,11 @@
+# Updating a book title
 
-## update.md
+from bookshelf.models import Book
 
-```markdown
-# Update Book Instance
-
-## Command Executed
-```python
-# Retrieve the book and update its title
 book = Book.objects.get(title="1984")
+
 book.title = "Nineteen Eighty-Four"
 book.save()
+book
 
-# Verify the update
-print(f"Updated title: {book.title}")
+# <Book: Title: 'Nineteen Eighty-Four', Author: 'George Orwell', Publication Year: 1949>

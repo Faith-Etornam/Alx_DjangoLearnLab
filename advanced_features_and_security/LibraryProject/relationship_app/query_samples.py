@@ -1,24 +1,47 @@
+#-- imports
+import os
+import django
 from relationship_app.models import Author, Book, Library, Librarian
 
-def specificAuthor(author_name):
-    print("All books by J.K. Rowling:")
-    author = Author.objects.get(name=author_name)
-    books = Book.objects.filter(author=author)
-    for book in books:
-        print(f"- {book.title}")
+#-- setup
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "LibraryProject.settings")
+django.setup()
 
-print()
+#--Queries:
+
+#-- Query all books by a specific author.
+def get_books_by_author(author_name):
+    try:
+        author = Author.objects.get(name=author_name)
+        books = Book.objects.filter(author=author)
+        print(f"Books by {author}:")
+        for book in books:
+            print(f" - {book.title}")
+    except Author.DoesNotExist:
+        print("Author not found.")
+
+#-- List all books in a library
+def get_all_books_in_library(library_name):
+    try:
+        library = Library.objects.get(name=library_name)
+        print(f"Books in {library_name}:")
+        for book in library.books.all():
+            print(f" - {book.title}")
+    except Library.DoesNotExist:
+        print("Library not found.")
+
+#-- Retrieve the librarian for a library
+def get_librarian_for_library(library_name):
+    try:
+        library = Library.objects.get(name=library_name)
+        librarian = Librarian.objects.get(library=library)
+        print(f"Librarian for {library.name}: {librarian.name}")
+    except (Library.DoesNotExist, Librarian.DoesNotExist):
+        print("Library or librarian not found.")
 
 
-def allBooks(library_name):
-    print("All books in Central Public Library:")
-    library = Library.objects.get(name=library_name)
-    for book in library.books.all():
-        print(f"- {book.title}")
-
-print()
-
-print("Librarian for Central Public Library:")
-library = Library.objects.get(name="Central Public Library")
-librarian = Librarian.objects.get(library=library)
-print(f"- {librarian.name}")
+#-- Running all queries
+if __name__ == "__main__":
+    get_books_by_author("Chinua Achebe")
+    get_all_books_in_library("Accra City Library")
+    get_librarian_for_library("Accra City Library")
