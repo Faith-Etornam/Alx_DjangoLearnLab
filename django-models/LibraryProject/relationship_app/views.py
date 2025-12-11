@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import user_passes_test
 from .models import Book
 from .models import Library
 
@@ -39,6 +40,19 @@ def is_member(user):
 
 def is_librarian(user):
         return user.profile.role == 'Librarian'
+
+@user_passes_test(is_admin)
+def admin_view(request):
+    pass
+
+@user_passes_test(is_librarian)
+def admin_view(request):
+    pass
+
+@user_passes_test(is_member)
+def admin_view(request):
+    pass
+
 
 # class SignUpView(CreateView):
 #     form_class = UserCreationForm
