@@ -11,7 +11,15 @@ def book_list(request):
     context = {'books': queryset}
     return render(request, 'relationship_app/list_books.html', context)
 
-class BookDetail(DetailView):
-    def get_queryset(self):
-        return Book.objects.filter(id=self.kwargs['id'])
+class LibraryDetail(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
+    library = Library.objects.get(id=1)
+    books = Book.objects.filter(id__in=[1, 2, 3])
+    library.books.set(books)
+
+class LibraryList(ListView):
+    model = Library
+    
 
