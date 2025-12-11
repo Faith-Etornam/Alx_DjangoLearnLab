@@ -12,7 +12,7 @@ def book_list(request):
     context = {'books': queryset}
     return render(request, 'relationship_app/list_books.html', context)
 
-class LibraryDetail(DetailView):
+class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
@@ -20,7 +20,5 @@ class LibraryDetail(DetailView):
     books = Book.objects.filter(id__in=[1, 2, 3])
     library.books.set(books)
 
-class LibraryList(ListView):
-    model = Library
     
 
