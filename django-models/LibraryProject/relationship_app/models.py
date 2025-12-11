@@ -30,6 +30,6 @@ class UserProfile(models.Model):
         LIBRARIAN_ROLE: 'Librarian',
         MEMBER_ROLE: 'Member'
     }
-    
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     role = models.CharField(choices=ROLE_CHOICES)

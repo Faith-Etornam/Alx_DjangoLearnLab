@@ -19,12 +19,6 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# class SignUpView(CreateView):
-#     form_class = UserCreationForm
-#     success_url = reverse_lazy('login')
-#     template_name = 'relationship_app/register.html'
-
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -36,6 +30,19 @@ def register(request):
     else:
         form = UserCreationForm()
         return render(request, 'relationship_app/register.html', {'form': form})
+    
+def is_admin(user):
+    return user.profile.role == 'Admin'
 
+def is_member(user):
+    return user.profile.role == 'Member'
+
+def is_librarian(user):
+        return user.profile.role == 'Librarian'
+
+# class SignUpView(CreateView):
+#     form_class = UserCreationForm
+#     success_url = reverse_lazy('login')
+#     template_name = 'relationship_app/register.html'
 
 
