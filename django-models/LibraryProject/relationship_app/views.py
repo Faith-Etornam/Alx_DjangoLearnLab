@@ -7,7 +7,7 @@ from .models import Library
 
 
 # Create your views here.
-def book_lists(request):
+def list_books(request):
     queryset = Book.objects.all()
     context = {'books': queryset}
     return render(request, 'relationship_app/list_books.html', context)
