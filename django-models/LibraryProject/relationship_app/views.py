@@ -18,9 +18,13 @@ class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
-    library = Library.objects.get(id=1)
-    books = Book.objects.filter(id__in=[1, 2, 3])
-    library.books.set(books)
+
+class LoginView():
+    pass
+
+class LogoutView():
+    pass
+
 
     
 
