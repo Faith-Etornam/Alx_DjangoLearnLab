@@ -14,3 +14,7 @@ class Book(models.Model):
 class Library(models.Model):
     name = models.CharField(max_length=255)
     books = models.ManyToManyField(Book)
+
+class Librarian(models.Model):
+    name = models.CharField(max_length=255)
+    library = models.OneToOneField(Library, on_delete=models.CASCADE)   
