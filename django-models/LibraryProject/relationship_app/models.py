@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 class Author(models.Model):
     name = models.CharField(max_length=255)
 
+    class Meta:
+        permissions = ('can_change_book', 'can_add_book', 'can_delete_book')
+
     def __str__(self):
         return self.name
 
