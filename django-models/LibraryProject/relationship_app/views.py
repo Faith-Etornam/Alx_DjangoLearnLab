@@ -71,6 +71,14 @@ def edit_book(request, pk):
         return redirect('book_list')
     return render(request, 'relationship_app/edit_book.html')
 
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request, pk):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=pk)
+        book.delete()
+        return redirect('book_list')
+    return render(request, 'relationship_app/delete_book.html')
+
 
 
 
