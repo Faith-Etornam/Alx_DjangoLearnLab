@@ -1,8 +1,14 @@
-# Retrieving book instance
+# Retrieve Book Instance
 
-from bookshelf.models import Book
-
+## Command Executed
+```python
+# Retrieve the book by title and display all attributes
 book = Book.objects.get(title="1984")
-book
 
-# <QuerySet [{'id': 1, 'title': '1984', 'author': 'George Orwell', 'publication_year': 1949}]>
+# Display all attributes
+print(f"ID: {book.id}")
+print(f"Title: {book.title}")
+print(f"Author: {book.author}")
+print(f"Published Year: {book.published_year}")
+print(f"ISBN: {book.isbn}")
+print(f"Genre: {book.genre}")
