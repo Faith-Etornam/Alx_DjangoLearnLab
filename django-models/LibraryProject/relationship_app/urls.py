@@ -12,5 +12,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('add_book/', views.add_book),
     path('edit_book/', views.edit_book),
-    path('edit_book/', views.delete_book)
+    path('delete_book/', views.delete_book)
 ]
