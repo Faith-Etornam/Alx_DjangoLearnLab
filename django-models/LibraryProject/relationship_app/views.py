@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView
-from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import user_passes_test, permission_required
+from django.views.generic.detail import DetailView
 from .models import Book
 from .models import Library
 
@@ -53,7 +52,7 @@ def admin_view(request):
 def admin_view(request):
     return render(request, 'relationship_app/member_view.html')
 
-@permission_required()
+@permission_required('relationship_app.can_add_book', raise_exception=True)
 def add_book(request):
     if request.method == 'POST':
         title = request.POST.get('title')
