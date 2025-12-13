@@ -41,8 +41,8 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     objects = CustomUserManager()
-    date_of_birth = models.DateField()
-    profile_photo = models.ImageField()
+    date_of_birth = models.DateField(null=True)
+    profile_photo = models.ImageField(null=True)
     
 
 
