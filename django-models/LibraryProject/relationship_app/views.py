@@ -4,8 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.detail import DetailView
+from django.contrib.auth.backends import BaseBackend
 from .models import Book
 from .models import Library
+
 
 
 # Create your views here.
@@ -61,7 +63,7 @@ def add_book(request):
         return redirect('book_list')
     return render(request, 'relationship_app/add_book.html')
 
-# @permission_required('relationship_app.can_change_book',raise_exception=True)
+@permission_required('relationship_app.can_change_book',raise_exception=True)
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
