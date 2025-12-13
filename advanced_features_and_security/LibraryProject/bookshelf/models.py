@@ -12,7 +12,8 @@ class Book(models.Model):
         permissions = [
             ('can_view', 'Can view books'),
             ('can_edit', 'Can edit books'),
-            ('can_delete', 'Can delete books')
+            ('can_delete', 'Can delete books'),
+            ('can_create', 'Can create books')
         ]
 
 class CustomUserManager(BaseUserManager):
