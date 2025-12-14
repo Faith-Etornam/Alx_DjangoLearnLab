@@ -1,0 +1,42 @@
+### ---------------------------
+### 1. Register a new user
+### ---------------------------
+POST http://127.0.0.1:8000/api/auth/register/
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "pass1234",
+  "bio": "New user bio",
+  "profile_picture": null
+}
+
+### ---------------------------
+### 2. Login with the user
+### ---------------------------
+POST http://127.0.0.1:8000/api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "pass1234"
+}
+
+### After running the login request above,
+### copy the returned token into the variable below.
+
+@token = d061d89540281c90e8a9e3dc4834e1877b685d46
+
+### ---------------------------
+### 3. Get user profile
+### ---------------------------
+GET http://127.0.0.1:8000/api/auth/me/
+Authorization: Token {{token}}
+
+
+### ---------------------------
+### 4. Logout user
+### ---------------------------
+POST http://127.0.0.1:8000/api/auth/logout/
+Authorization: Token {{token}}

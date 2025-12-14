@@ -1,0 +1,47 @@
+### API Test Requests (.http file)
+
+### ---------------------------
+### POSTS ENDPOINT TESTS
+### ---------------------------
+
+# Get first page of posts
+GET http://127.0.0.1:8000/api/posts/
+Accept: application/json
+
+###
+# Get second page of posts
+GET http://127.0.0.1:8000/api/posts/?page=2
+Accept: application/json
+
+###
+# Get posts with custom page size
+GET http://127.0.0.1:8000/api/posts/?page=1&page_size=20
+Accept: application/json
+
+###
+# Search posts (title or content)
+GET http://127.0.0.1:8000/api/posts/?search=django
+Accept: application/json
+
+###
+# Combine search + pagination
+GET http://127.0.0.1:8000/api/posts/?search=api&page=2
+Accept: application/json
+
+### ---------------------------
+### COMMENTS ENDPOINT TESTS
+### ---------------------------
+
+# Get comments (first page)
+GET http://127.0.0.1:8000/api/comments/
+Accept: application/json
+
+###
+# Get page 3 of comments
+GET http://127.0.0.1:8000/api/comments/?page=3
+Accept: application/json
+
+###
+# Combine search (if added later) + pagination
+GET http://127.0.0.1:8000/api/comments/?search=nice&page=1
+Accept: application/json
