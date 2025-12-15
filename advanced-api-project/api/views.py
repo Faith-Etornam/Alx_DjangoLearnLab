@@ -12,6 +12,7 @@ class ListView(ListAPIView):
     serializer_class = BookSerializer
     filter_backends = [rest_framework.filters.DjangoFilterBackend, rest_framework.filters.OrderingFilter, filters.SearchFilter]
     filterset_fields = ['name', 'publication_year', 'author']
+    search_fields = ['name', 'author']
 
 class DetailView(RetrieveAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
