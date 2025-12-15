@@ -1,27 +1,93 @@
-from django.test import TestCase
-from rest_framework.test import APIRequestFactory
-from rest_framework import status
 from django.urls import reverse
-from .views import ListView 
+from rest_framework.test import APITestCase, APIClient
+from rest_framework import status
+from django.contrib.auth.models import User
 from .models import Book, Author
 
-class BookListTests(TestCase):
+
+class BookAPITestCase(APITestCase):
+    
     def setUp(self):
-        self.factory = APIRequestFactory()
+        # Creating test user
+        self.user = User.objects.create_user(username='testuser', password='password123')
+        self.client = APIClient()
         
-        self.author = Author.objects.create(name="Test Author")
-        self.book = Book.objects.create(
-            title="Book 1", 
-            author=self.author, 
-            publication_year=2021
-        )
-
-    def test_list_books_view(self):
-        url = reverse('list-book') 
-
-        request = self.factory.get(url)
-
-        response = ListView.as_view()(request)
-
+        # Creating sample authors
+        self.author_a = Author.objects.create(name='Author A')
+        self.author_b = Author.objects.create(name='Author B')
+        
+        # Creating sample books
+        self.book1 = Book.objects.create(title='Book One', author=self.author_a, publication_year=2020)
+        self.book2 = Book.objects.create(title='Book Two', author=self.author_b, publication_year=2021)
+        self.book3 = Book.objects.create(title='Book Three', author=self.author_a, publication_year=2019)
+        
+        
+    #-------- Test Listing Endpoint ----------
+    def test_list_book(self):
+        url = reverse('book-list')
+        response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1) 
+        self.assertEqual(len(response.data), 3)
+
+
+    #-------- Test Filter Endpoint ----------
+    def test_filter_books_by_author(self):
+        url = reverse('book-list') + f'?author={self.author_a.id}'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+
+
+    #-------- Test Search Endpoint ----------
+    def test_search_books_by_title(self):
+        url = reverse('book-list') + '?search=Book Two'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['title'], 'Book Two')
+
+
+    #-------- Test Order Endpoint ----------
+    def test_order_books_by_publication_year(self):
+        url = reverse('book-list') + '?ordering=publication_year'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        years = [book['publication_year'] for book in response.data]
+        self.assertEqual(years, sorted(years))
+
+
+    #-------- Test Create Endpoint ----------
+    def test_create_book_authenticated(self):
+        self.client.login(username='testuser', password='password123')
+        url = reverse('book-create')
+        author_c = Author.objects.create(name='Author C')
+        data = {'title': 'Book Four', 'author': author_c.id, 'publication_year': 2022}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Book.objects.count(), 4)
+        
+    def test_create_book_unauthenticated(self):
+        url = reverse('book-create')
+        author_d = Author.objects.create(name='Author D')
+        data = {'title': 'Book Five', 'author': author_d.id, 'publication_year': 2023}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_403_UNAUTHORIZED)
+
+
+    # ----------- Test Update Endpoint -----------
+    def test_update_book_authenticated(self):
+        self.client.login(username='testuser', password='password123')
+        url = reverse('book-update', args=[self.book1.id])
+        data = {'title': 'Book One Updated'}
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.book1.refresh_from_db()
+        self.assertEqual(self.book1.title, 'Book One Updated')
+
+
+    # ----------- Test Delete Endpoint -----------
+    def test_delete_book_authenticated(self):
+        self.client.login(username='testuser', password='password123')
+        url = reverse('book-delete', args=[self.book2.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Book.objects.filter(id=self.book2.id).exists())
