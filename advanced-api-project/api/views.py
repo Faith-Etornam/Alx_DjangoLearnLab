@@ -9,7 +9,7 @@ from .serializers import BookSerializer
 class ListView(ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [rest_framework.filters.DjangoFilterBackend, rest_framework.filters.OrderingFilter]
     filterset_fields = ['name', 'publication_year', 'author']
 
 class DetailView(RetrieveAPIView):
