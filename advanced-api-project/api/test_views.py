@@ -24,7 +24,7 @@ class BookAPITestCase(APITestCase):
         
     #-------- Test Listing Endpoint ----------
     def test_list_book(self):
-        url = reverse('book-list')
+        url = reverse('list-book')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 3)
@@ -32,7 +32,7 @@ class BookAPITestCase(APITestCase):
 
     #-------- Test Filter Endpoint ----------
     def test_filter_books_by_author(self):
-        url = reverse('book-list') + f'?author={self.author_a.id}'
+        url = reverse('list-book') + f'?author={self.author_a.id}'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
@@ -40,7 +40,7 @@ class BookAPITestCase(APITestCase):
 
     #-------- Test Search Endpoint ----------
     def test_search_books_by_title(self):
-        url = reverse('book-list') + '?search=Book Two'
+        url = reverse('list-book') + '?search=Book Two'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data[0]['title'], 'Book Two')
@@ -48,7 +48,7 @@ class BookAPITestCase(APITestCase):
 
     #-------- Test Order Endpoint ----------
     def test_order_books_by_publication_year(self):
-        url = reverse('book-list') + '?ordering=publication_year'
+        url = reverse('list-book') + '?ordering=publication_year'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         years = [book['publication_year'] for book in response.data]
@@ -58,7 +58,7 @@ class BookAPITestCase(APITestCase):
     #-------- Test Create Endpoint ----------
     def test_create_book_authenticated(self):
         self.client.login(username='testuser', password='password123')
-        url = reverse('book-create')
+        url = reverse('create-book')
         author_c = Author.objects.create(name='Author C')
         data = {'title': 'Book Four', 'author': author_c.id, 'publication_year': 2022}
         response = self.client.post(url, data)
@@ -66,7 +66,7 @@ class BookAPITestCase(APITestCase):
         self.assertEqual(Book.objects.count(), 4)
         
     def test_create_book_unauthenticated(self):
-        url = reverse('book-create')
+        url = reverse('create-book')
         author_d = Author.objects.create(name='Author D')
         data = {'title': 'Book Five', 'author': author_d.id, 'publication_year': 2023}
         response = self.client.post(url, data)
@@ -76,7 +76,7 @@ class BookAPITestCase(APITestCase):
     # ----------- Test Update Endpoint -----------
     def test_update_book_authenticated(self):
         self.client.login(username='testuser', password='password123')
-        url = reverse('book-update', args=[self.book1.id])
+        url = reverse('update-book', args=[self.book1.id])
         data = {'title': 'Book One Updated'}
         response = self.client.patch(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
