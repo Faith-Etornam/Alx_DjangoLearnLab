@@ -1,5 +1,3 @@
-from django.contrib import messages
-from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -29,15 +27,13 @@ class PostDetailView(DetailView):
     template_name = 'blog/detail.html'
     context_object_name = 'post'
 
-    def get_queryset(self):
-        return Post.objects.filter(id=self.kwargs['pk'])
 
-class UpdateView(BlogDeleteView):
+class UpdateView():
     model = Post
     template_name = ''
 
-class DeleteView():
-    pass
+class DeleteView(BlogDeleteView):
+    model = Post
 
 
 @login_required
