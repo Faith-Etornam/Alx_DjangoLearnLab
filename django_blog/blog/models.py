@@ -14,4 +14,4 @@ class Profile(models.Model):
     bio = models.TextField(default='', blank=True)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username}\'s Profile'
