@@ -11,24 +11,30 @@
         
         </div>
 
-{% endblock %}
-{% block content %}
-    <h2>User Profile</h2>
-    
+
     <div style="background: white; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
-        
-        <form method="POST">
-            {% csrf_token %}
-            
-            <div style="margin-bottom: 15px;">
-                {{ form.as_p }}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display:block; font-weight:bold;">{{ field.label }}:</label>
+                {{ field }}
+                
+                {% if field.errors %}
+                    <div style="color: red; font-size: 0.9em;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
             </div>
+        {% endfor %}
 
-            <button type="submit" style="background-color: #333; color: white; padding: 10px 20px; border: none; cursor: pointer;">
-                Update Info
-            </button>
-        </form>
+        <button type="submit" style="background-color: #333; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            Update Info
+        </button>
 
-    </div>
+    </form>
+</div>
 
 {% endblock %}
