@@ -25,7 +25,7 @@ def profileView(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated!')
-            return redirect('profile')
+            return redirect('home')
     else:
         form = UserUpdateForm(instance=request.user)
 
