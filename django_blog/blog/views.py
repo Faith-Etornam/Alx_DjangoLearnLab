@@ -17,6 +17,10 @@ class RegisterView(CreateView):
     template_name = 'blog/register.html'
     success_url = reverse_lazy('home')
 
+class BlogCreateView(CreateView):
+    model = Post
+    template_name = 'blog/blog_create.html'
+
 class ListView(BlogListView):
     model = Post
     template_name = 'blog/posts.html'

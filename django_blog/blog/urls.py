@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name='blog/logout.html')),
     path('profile/', views.profileView, name='profile'),
     path('posts/', views.ListView.as_view(), name='posts'),
+    path('posts/new/', views.ListView.as_view(), name='posts_create'),
     path('posts/<int:pk>', views.PostDetailView.as_view(), name='post_detail'),
     path('posts/<int:pk>/delete', views.BlogDeleteView.as_view() ,name='delete-post'),
     path('posts/<int:pk>/update', views.BlogUpdateView.as_view() ,name='delete-post'),
