@@ -14,3 +14,8 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'blog/registration.html', {'form': form})
+
+def home(request):
+    # This assumes you will create a file named 'home.html' 
+    # inside blog/templates/blog/
+    return render(request, 'base.html')
