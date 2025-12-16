@@ -1,16 +1,100 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Posts</h1>
+
+<style>
+    /* Container for the whole feed to center it */
+    .blog-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* The card style for each post */
+    .post-card {
+        background-color: #ffffff;
+        border: 1px solid #e1e4e8;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+    }
+
+    /* Lift the card slightly when hovering */
+    .post-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Title styling */
+    .post-title {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .post-title a {
+        text-decoration: none;
+        color: #2c3e50;
+    }
+
+    .post-title a:hover {
+        color: #007bff;
+    }
+
+    /* Post body text */
+    .post-content {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* Meta info (Author and Date) */
+    .post-meta {
+        font-size: 0.9rem;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .no-posts {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        margin-top: 50px;
+    }
+</style>
+
+<div class="blog-container">
+  <h1>Latest Posts</h1>
+  
   {% if posts %}
     {% for post in posts %}
-      <div class="post">
-        <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
-        <p>{{ post.content|truncatewords:30 }}</p>
-        <p>Posted by {{ post.author.username }} on {{ post.published_date }}</p>
+      <div class="post-card">
+        
+        <h2 class="post-title">
+           {% comment %} <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a> {% endcomment %}
+        </h2>
+        
+        <div class="post-content">
+           {{ post.content|truncatewords:30 }}
+        </div>
+        
+        <div class="post-meta">
+           <span class="author">By <strong>{{ post.author.username }}</strong></span>
+           <span class="date">{{ post.published_date|date:"F d, Y" }}</span>
+        </div>
+        
       </div>
     {% endfor %}
   {% else %}
-    <p>No posts yet.</p>
+    <p class="no-posts">No posts yet.</p>
   {% endif %}
+</div>
+
 {% endblock %}

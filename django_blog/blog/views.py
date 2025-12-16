@@ -21,7 +21,11 @@ class RegisterView(CreateView):
 
 class ListView(BlogListView):
     model = Post
-    template_name = 'blog/'
+    template_name = 'blog/posts.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.all()
 
 @login_required
 def profileView(request):
