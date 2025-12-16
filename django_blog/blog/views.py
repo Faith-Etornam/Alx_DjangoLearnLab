@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView as BlogListView, DeleteView as BlogDeleteView, UpdateView as BlogUpdateView, DetailView as BlogDetailView
+from django.views.generic import CreateView, ListView as BlogListView, DeleteView as BlogDeleteView, UpdateView as BlogUpdateView, DetailView
 from .models import Post
 from .forms import RegisterForm, UserUpdateForm
 
@@ -24,13 +24,17 @@ class ListView(BlogListView):
     template_name = 'blog/posts.html'
     context_object_name = 'posts'
 
-class DetailView(BlogDetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/detail.html'
     context_object_name = 'post'
 
-class UpdateView():
-    pass
+    def get_queryset(self):
+        return Post.objects.filter(id=self.kwargs['pk'])
+
+class UpdateView(BlogDeleteView):
+    model = Post
+    template_name = ''
 
 class DeleteView():
     pass
