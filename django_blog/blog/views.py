@@ -15,7 +15,7 @@ def account(request):
 
 class RegisterView(CreateView):
     form_class = RegisterForm
-    template_name = 'blog/registration.html'
+    template_name = 'blog/register.html'
     success_url = reverse_lazy('home')
 
 @login_required
