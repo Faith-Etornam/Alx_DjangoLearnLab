@@ -5,13 +5,6 @@ from rest_framework.generics import CreateAPIView
 
 # Create your views here.
 
-class Posts(ModelViewSet):
-    queryset = Post.objects.all()
-    # serializer_class = 
-
-class Comments(ModelViewSet):
-    queryset = Comment.objects.all()
-
 class Register(CreateAPIView):
     pass
 
