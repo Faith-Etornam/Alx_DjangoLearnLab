@@ -11,7 +11,7 @@ class UserRegistration(serializers.ModelSerializer):
         fields = ['username', 'email', 'first_name', 'last_name', 'password', 'bio', 'profile_picture']
 
     def create(self, validated_data):
-        user = User.objects.create_user(
+        user = get_user_model().objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email'),
             password=validated_data['password'],
@@ -21,5 +21,3 @@ class UserRegistration(serializers.ModelSerializer):
 
         Token.objects.create(user=user)
         return user
-
-
