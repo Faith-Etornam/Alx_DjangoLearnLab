@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserFeedView, LikePostView
+from .views import UserFeedView, LikePostView, 
 
 urlpatterns = [
     path('feed/', UserFeedView.as_view(), name='user-feed'),

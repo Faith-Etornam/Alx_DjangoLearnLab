@@ -60,5 +60,24 @@ class LikePostView(generics.GenericAPIView):
             )
 
         return Response({"detail": "Post liked."}, status=status.HTTP_201_CREATED)
+    
+
+class UnlikePostView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, pk, *args, **kwargs):
+        post = generics.get_object_or_404(Post, pk=pk)
+
+        like = Like.objects.filter(user=request.user, post=post).first()
+        
+        if not like:
+            return Response(
+                {"detail": "You have not liked this post."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        like.delete()
+        
+        return Response({"detail": "Post unliked."}, status=status.HTTP_200_OK)
 
 
