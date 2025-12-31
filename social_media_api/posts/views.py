@@ -37,9 +37,6 @@ class UserFeedView(generics.GenericAPIView):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     
-
-
-
 class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
