@@ -1,8 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework import permissions
 from posts.models import Comment, Post
 from .serializers import PostSerializer
 from .permissions import IsOwnerOrReadOnly
+from .paginations import PostPagination
 
 # Create your views here.
 
