@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from posts.models import Comment, Post
 from rest_framework import viewsets
+from rest_framework import permissions
+from posts.models import Comment, Post
+from .serializers import PostSerializer
 
 # Create your views here.
 
