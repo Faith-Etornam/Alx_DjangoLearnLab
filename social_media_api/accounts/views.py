@@ -41,5 +41,14 @@ class LoginView(APIView):
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class Profile():
-    pass
+class ProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        return Response({
+            'username': user.username,
+            'email': user.email,
+            'bio': user.bio,
+            'profile_picture': user.profile_picture.url if user.profile_picture else None
+        })
