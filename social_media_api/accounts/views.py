@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions, generics
 from rest_framework.authtoken.models import Token
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, LoginSerializer
 
 # Create your views here.
 
@@ -52,3 +52,10 @@ class ProfileView(APIView):
             'bio': user.bio,
             'profile_picture': user.profile_picture.url if user.profile_picture else None
         })
+    
+class LogoutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response({"detail": "Logout successful"}, status=status.HTTP_200_OK)
